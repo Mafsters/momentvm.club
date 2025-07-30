@@ -1,0 +1,323 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+	<main>
+		<!-- Hero Section -->
+		<section class="faq-hero">
+			<div class="container">
+				<div class="faq-hero-content">
+					<h1>Frequently Asked Questions</h1>
+					<p>Everything you need to know about joining our exclusive professional community</p>
+					<a href="/" class="back-link">← Back to Home</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- FAQ Section -->
+		<section class="faq-section">
+			<div class="container">
+				<div class="faq-grid">
+					<div class="faq-item">
+						<h3>How much does it cost?</h3>
+						<p>The community is completely free. We believe in the power of mutual value exchange rather than monetary transactions.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What makes someone qualified?</h3>
+						<p>We look for professionals with deep domain expertise, proven track records, and a genuine desire to help others succeed.</p>
+					</div>
+					<div class="faq-item">
+						<h3>How active is the community?</h3>
+						<p>Members typically respond within 24 hours. Quality conversations happen daily across multiple domains and specialties.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What happens after approval?</h3>
+						<p>You'll receive an invitation to our private community platform with guidelines, introductions, and access to ongoing discussions.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Can I promote my services?</h3>
+						<p>No. This is a peer support community, not a marketplace. Promotional content results in immediate removal.</p>
+					</div>
+					<div class="faq-item">
+						<h3>How do you maintain quality?</h3>
+						<p>Through careful vetting, active moderation, and a culture that prioritizes helpful, actionable contributions over self-promotion.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What domains are represented?</h3>
+						<p>Our community spans product, engineering, marketing, growth, finance, operations, and leadership across various industries.</p>
+					</div>
+					<div class="faq-item">
+						<h3>How long does the application process take?</h3>
+						<p>We review applications weekly and typically respond within 3-5 business days with our decision.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What if I'm not accepted?</h3>
+						<p>We provide brief feedback and encourage reapplication after gaining more experience or expertise in your domain.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Is there a time commitment?</h3>
+						<p>No mandatory time commitment. Participate when you have questions, insights to share, or time to help others.</p>
+					</div>
+					<div class="faq-item">
+						<h3>What platforms do you use?</h3>
+						<p>We use a private, modern community platform designed for professional discussions and knowledge sharing.</p>
+					</div>
+					<div class="faq-item">
+						<h3>Can I leave the community?</h3>
+						<p>Absolutely. You can leave at any time, though we'd love to understand your reasons to improve the experience.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="cta-section">
+			<div class="container">
+				<div class="cta-content">
+					<h2>Ready to connect with exceptional professionals?</h2>
+					<p>Applications are reviewed weekly. We maintain excellence by remaining highly selective.</p>
+					<a href="mailto:hello@example.com?subject=Application%20to%20Join%20Professional%20Community&body=Hi%2C%0A%0AI%27d%20like%20to%20apply%20to%20join%20your%20exclusive%20professional%20community.%0A%0AHere%27s%20a%20bit%20about%20me%3A%0A%0A-%20Current%20Role%3A%20%0A-%20Company%3A%20%0A-%20Years%20of%20Experience%3A%20%0A-%20Domain%20Expertise%3A%20%0A-%20What%20value%20I%27d%20bring%3A%20%0A-%20LinkedIn%20Profile%3A%20%0A%0AThanks%21" class="btn-primary large">Apply to Join</a>
+					<p class="cta-note">Application takes 5 minutes. Decisions communicated within 3 business days.</p>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	/* Reset and Base Styles */
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Arial, sans-serif;
+		line-height: 1.6;
+		color: #0F172A;
+		background: #FFFFFF;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	/* FAQ Hero Section */
+	.faq-hero {
+		padding: 100px 0 60px;
+		background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.faq-hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+		pointer-events: none;
+	}
+
+	.faq-hero-content {
+		text-align: center;
+		position: relative;
+		z-index: 1;
+	}
+
+	.faq-hero h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		line-height: 1.1;
+		margin-bottom: 24px;
+		color: white;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.faq-hero p {
+		font-size: 1.25rem;
+		color: #CBD5E1;
+		max-width: 600px;
+		margin: 0 auto 40px;
+		line-height: 1.6;
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		color: #10B981;
+		text-decoration: none;
+		font-weight: 600;
+		transition: all 0.3s ease;
+	}
+
+	.back-link:hover {
+		color: white;
+		transform: translateX(-4px);
+	}
+
+	/* FAQ Section */
+	.faq-section {
+		padding: 100px 0;
+		background: white;
+	}
+
+	.faq-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		gap: 32px;
+	}
+
+	.faq-item {
+		padding: 32px;
+		background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+		border-radius: 20px;
+		border: 2px solid #E2E8F0;
+		transition: all 0.4s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.faq-item::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+		transform: scaleX(0);
+		transition: transform 0.4s ease;
+	}
+
+	.faq-item:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+		border-color: #3B82F6;
+	}
+
+	.faq-item:hover::before {
+		transform: scaleX(1);
+	}
+
+	.faq-item h3 {
+		font-size: 1.375rem;
+		font-weight: 700;
+		margin-bottom: 16px;
+		color: #0F172A;
+		line-height: 1.3;
+	}
+
+	.faq-item p {
+		color: #475569;
+		line-height: 1.7;
+		font-size: 1.0625rem;
+	}
+
+	/* CTA Section */
+	.cta-section {
+		padding: 120px 0;
+		background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+		text-align: center;
+		position: relative;
+	}
+
+	.cta-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+		pointer-events: none;
+	}
+
+	.cta-content {
+		position: relative;
+		z-index: 1;
+	}
+
+	.cta-content h2 {
+		font-size: 2.75rem;
+		font-weight: 800;
+		color: white;
+		margin-bottom: 32px;
+		line-height: 1.2;
+	}
+
+	.cta-content p {
+		font-size: 1.25rem;
+		color: #CBD5E1;
+		margin-bottom: 48px;
+		line-height: 1.6;
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+		color: white;
+		border: none;
+		padding: 16px 32px;
+		border-radius: 12px;
+		font-size: 16px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.btn-primary:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5);
+	}
+
+	.btn-primary.large {
+		padding: 22px 44px;
+		font-size: 18px;
+	}
+
+	.cta-note {
+		font-size: 1rem !important;
+		color: #94A3B8 !important;
+		margin-top: 32px !important;
+		margin-bottom: 0 !important;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.faq-hero h1 {
+			font-size: 2.25rem;
+		}
+
+		.faq-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.container {
+			padding: 0 16px;
+		}
+
+		.faq-hero {
+			padding: 80px 0 40px;
+		}
+
+		.faq-section {
+			padding: 80px 0;
+		}
+
+		.cta-section {
+			padding: 80px 0;
+		}
+
+		.cta-content h2 {
+			font-size: 2.25rem;
+		}
+	}
+</style>
