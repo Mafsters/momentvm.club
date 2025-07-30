@@ -258,13 +258,13 @@ style.textContent = `
             left: -100%;
             top: 70px;
             flex-direction: column;
-            background-color: #1a1a1a;
+            background-color: white;
             width: 100%;
             text-align: center;
             transition: 0.3s;
-            box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 27px rgba(0, 0, 0, 0.1);
             padding: 2rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         .nav-menu.active {
@@ -336,7 +336,7 @@ progressBar.style.cssText = `
     left: 0;
     width: 0%;
     height: 3px;
-    background: linear-gradient(135deg, #10b981 0%, #f59e0b 100%);
+    background: linear-gradient(135deg, #1e40af 0%, #ea580c 100%);
     z-index: 1001;
     transition: width 0.1s ease;
 `;
