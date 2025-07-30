@@ -183,6 +183,12 @@ body {
     text-align: center;
 }
 
+.btn-large {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 .hero-stats {
     display: flex;
     gap: 2rem;
@@ -232,21 +238,39 @@ body {
 }
 
 .card-1 {
-    top: 20%;
-    left: 10%;
+    top: 15%;
+    left: 5%;
     animation-delay: 0s;
 }
 
 .card-2 {
-    top: 50%;
-    right: 10%;
-    animation-delay: 2s;
+    top: 35%;
+    right: 15%;
+    animation-delay: 1s;
 }
 
 .card-3 {
-    bottom: 20%;
-    left: 20%;
+    bottom: 25%;
+    left: 15%;
+    animation-delay: 2s;
+}
+
+.card-4 {
+    top: 60%;
+    left: 5%;
+    animation-delay: 3s;
+}
+
+.card-5 {
+    top: 25%;
+    right: 5%;
     animation-delay: 4s;
+}
+
+.card-6 {
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 5s;
 }
 
 @keyframes float {
@@ -282,8 +306,10 @@ body {
 
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .about-card {
@@ -397,6 +423,88 @@ body {
     border-bottom: none;
 }
 
+/* Testimonials Section */
+.testimonials {
+    padding: 80px 0;
+    background: #f8fafc;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-content {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-content p {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    line-height: 1.6;
+    font-style: italic;
+    position: relative;
+}
+
+.testimonial-content p::before {
+    content: '"';
+    font-size: 3rem;
+    color: #1e40af;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-family: serif;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1e40af 0%, #ea580c 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.author-avatar i {
+    font-size: 1.2rem;
+    color: white;
+}
+
+.author-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+}
+
+.author-info span {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
 /* Members Section */
 .members {
     padding: 80px 0;
@@ -462,6 +570,54 @@ body {
     border: 1px solid rgba(30, 64, 175, 0.2);
 }
 
+/* CTA Section */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1e40af 0%, #ea580c 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-content p {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+.cta-stat {
+    text-align: center;
+}
+
+.cta-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.cta-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
 /* Apply Section */
 .apply {
     padding: 80px 0;
@@ -490,9 +646,10 @@ body {
 }
 
 .apply-features {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    margin-top: 2rem;
 }
 
 .feature {
@@ -685,11 +842,36 @@ body {
     }
     
     .about-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: 640px) {
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
     }
     
     .members-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (max-width: 640px) {
+        .testimonials-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-stats {
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .cta-content h2 {
+            font-size: 2rem;
+        }
     }
 }
 
