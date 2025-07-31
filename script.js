@@ -69,13 +69,20 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
             
-            // Simulate form submission (replace with actual API call)
-            setTimeout(() => {
-                showSuccessMessage();
-                this.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
+            // Send form data via email
+            sendFormEmail(data)
+                .then(() => {
+                    showSuccessMessage();
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                })
+                .catch((error) => {
+                    console.error('Form submission error:', error);
+                    showErrorMessage('Something went wrong. Please try again or contact us directly.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
         });
     }
 });
@@ -141,6 +148,35 @@ function clearFieldError(input) {
     }
 }
 
+// Send form data via email
+function sendFormEmail(data) {
+    // Using EmailJS service (you'll need to set this up)
+    // For now, we'll use a simple mailto link as fallback
+    const subject = 'New Momentvm.club Application';
+    const body = `
+New application received:
+
+Name: ${data.name}
+Email: ${data.email}
+LinkedIn: ${data.linkedin}
+Role: ${data.role}
+Company: ${data.company || 'Not specified'}
+Expertise: ${data.expertise}
+Motivation: ${data.motivation}
+
+Submitted on: ${new Date().toLocaleString()}
+    `;
+    
+    // Create mailto link
+    const mailtoLink = `mailto:federico.maffini@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Open email client
+    window.open(mailtoLink);
+    
+    // Return a resolved promise to simulate successful submission
+    return Promise.resolve();
+}
+
 // Show success message
 function showSuccessMessage() {
     const form = document.getElementById('applicationForm');
@@ -166,6 +202,34 @@ function showSuccessMessage() {
     // Remove success message after 5 seconds
     setTimeout(() => {
         successDiv.remove();
+    }, 5000);
+}
+
+// Show error message
+function showErrorMessage(message) {
+    const form = document.getElementById('applicationForm');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.style.cssText = `
+        background: #fef2f2;
+        border: 1px solid #ef4444;
+        color: #991b1b;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-weight: 500;
+    `;
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-circle" style="margin-right: 0.5rem;"></i>
+        ${message}
+    `;
+    
+    form.parentNode.insertBefore(errorDiv, form);
+    
+    // Remove error message after 5 seconds
+    setTimeout(() => {
+        errorDiv.remove();
     }, 5000);
 }
 

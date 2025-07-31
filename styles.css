@@ -625,10 +625,10 @@ body {
 }
 
 .apply-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
 }
 
 .apply-text h2 {
@@ -666,10 +666,12 @@ body {
 
 .apply-form {
     background: white;
-    padding: 2.5rem;
+    padding: 3rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 800px;
 }
 
 .form-group {
@@ -824,7 +826,6 @@ body {
     }
     
     .apply-content {
-        grid-template-columns: 1fr;
         gap: 2rem;
     }
     
