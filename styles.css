@@ -453,6 +453,8 @@ body {
     line-height: 1.6;
     font-style: italic;
     position: relative;
+    padding-left: 2rem;
+    margin: 0;
 }
 
 .testimonial-content p::before {
@@ -461,8 +463,9 @@ body {
     color: #1e40af;
     position: absolute;
     top: -10px;
-    left: -10px;
+    left: 0;
     font-family: serif;
+    z-index: 1;
 }
 
 .testimonial-author {
