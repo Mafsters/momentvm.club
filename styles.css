@@ -108,7 +108,8 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    align-items: center;
+    align-items: start;
+    padding-top: 2rem;
 }
 
 .hero-title {
@@ -204,71 +205,23 @@ body {
     font-weight: 500;
 }
 
-/* Hero Visual */
-.hero-visual {
-    position: relative;
-    height: 400px;
-}
-
-.floating-card {
-    position: absolute;
+/* Hero Form */
+.hero-form {
     background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    animation: float 6s ease-in-out infinite;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 100px;
 }
 
-.floating-card i {
+.hero-form h3 {
     font-size: 1.5rem;
-    color: #1e3a8a;
-}
-
-.card-1 {
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.card-2 {
-    top: 10%;
-    right: 10%;
-    animation-delay: 1s;
-}
-
-.card-3 {
-    top: 50%;
-    left: 5%;
-    animation-delay: 2s;
-}
-
-.card-4 {
-    top: 50%;
-    right: 5%;
-    animation-delay: 3s;
-}
-
-.card-5 {
-    bottom: 10%;
-    left: 15%;
-    animation-delay: 4s;
-}
-
-.card-6 {
-    bottom: 10%;
-    right: 15%;
-    animation-delay: 5s;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    text-align: center;
 }
 
 /* Section Headers */
@@ -614,45 +567,13 @@ body {
     font-weight: 500;
 }
 
-/* Register Section */
-.register-section {
-    padding: 80px 0;
-    background: #f8fafc;
-}
-
-.register-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-    align-items: center;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.register-content h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #1a1a1a;
-}
-
-.register-content p {
-    font-size: 1.1rem;
-    color: #64748b;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-}
-
 .register-form {
     background: white;
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.05);
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
 }
 
 .form-row {
@@ -855,6 +776,7 @@ body {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
+        padding-top: 1rem;
     }
     
     .hero-title {
@@ -866,21 +788,9 @@ body {
         align-items: center;
     }
     
-    .hero-stats {
-        justify-content: center;
-    }
-    
-    .hero-visual {
-        height: 300px;
-    }
-    
-    .floating-card {
-        padding: 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .floating-card i {
-        font-size: 1.2rem;
+    .hero-form {
+        position: static;
+        margin-top: 2rem;
     }
     
     .benefits-content {
