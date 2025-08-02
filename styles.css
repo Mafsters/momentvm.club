@@ -793,6 +793,20 @@ body {
         margin-top: 2rem;
     }
     
+    .floating-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .floating-card {
+        padding: 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .floating-card i {
+        font-size: 1.2rem;
+    }
+    
     .benefits-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -888,6 +902,11 @@ body {
     .floating-card i {
         font-size: 1rem;
     }
+    
+    .floating-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 /* Smooth Scrolling */
@@ -924,4 +943,71 @@ html {
 .form-error {
     border-color: #ef4444 !important;
     background-color: #fef2f2;
+} 
+
+/* Floating Cards Section */
+.floating-cards-section {
+    padding: 80px 0;
+    background: #f8fafc;
+}
+
+.floating-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.floating-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    animation: float 6s ease-in-out infinite;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.floating-card:hover {
+    transform: translateY(-5px);
+}
+
+.floating-card i {
+    font-size: 1.5rem;
+    color: #1e3a8a;
+}
+
+.card-1 {
+    animation-delay: 0s;
+}
+
+.card-2 {
+    animation-delay: 1s;
+}
+
+.card-3 {
+    animation-delay: 2s;
+}
+
+.card-4 {
+    animation-delay: 3s;
+}
+
+.card-5 {
+    animation-delay: 4s;
+}
+
+.card-6 {
+    animation-delay: 5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
 } 
