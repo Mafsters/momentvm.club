@@ -249,43 +249,7 @@ function sendFormEmail(data, formType = 'application') {
             });
     });
 }
-// Fallback method using multiple options
-// Send form data via EmailJS with working method
-function sendFormEmail(data, formType = 'application') {
-    return new Promise((resolve, reject) => {
-        if (!emailjsInitialized) {
-            reject(new Error('EmailJS not initialized'));
-            return;
-        }
 
-        // Get the form element
-        const form = document.getElementById('applicationForm') || document.getElementById('quickRegistrationForm');
-        if (!form) {
-            reject(new Error('Form not found'));
-            return;
-        }
-
-        console.log('Attempting to send email with form data...');
-        
-        const serviceID = 'service_lb1tvqc';
-        const templateID = 'template_1bsatl6';
-        
-        emailjs.sendForm(serviceID, templateID, form)
-            .then((response) => {
-                console.log('EmailJS success:', response);
-                resolve(response);
-            })
-            .catch((error) => {
-                console.error('EmailJS error details:', {
-                    error: error,
-                    message: error.message,
-                    status: error.status,
-                    text: error.text
-                });
-                reject(error);
-            });
-    });
-}
 // Show info popup
 function showInfoPopup(message) {
     const overlay = document.createElement('div');
@@ -621,7 +585,9 @@ const statsObserver = new IntersectionObserver((entries) => {
             statsObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.5 });document.addEventListener('DOMContentLoaded', function() {
+}, { threshold: 0.5 });
+
+document.addEventListener('DOMContentLoaded', function() {
     const statElements = document.querySelectorAll('.stat');
     statElements.forEach(stat => {
         statsObserver.observe(stat);
