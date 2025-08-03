@@ -736,4 +736,8 @@ document.body.appendChild(progressBar);
 window.addEventListener('scroll', function() {
     const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
     progressBar.style.width = scrolled + '%';
-}); 
+});         // Add debugging to form submission
+        console.log("Form submission started");
+        console.log("Form element:", form);
+        console.log("Form data:", data);
+        console.log("Form type:", formType);
