@@ -969,37 +969,37 @@ html {
 
 .card-1 {
     top: 10%;
-    left: 5%;
+    right: 5%;
     animation-delay: 0s;
 }
 
 .card-2 {
     top: 15%;
-    left: 15%;
+    right: 15%;
     animation-delay: 1s;
 }
 
 .card-3 {
     top: 50%;
-    left: 10%;
+    right: 10%;
     animation-delay: 2s;
 }
 
 .card-4 {
     top: 55%;
-    left: 20%;
+    right: 20%;
     animation-delay: 3s;
 }
 
 .card-5 {
     bottom: 15%;
-    left: 5%;
+    right: 5%;
     animation-delay: 4s;
 }
 
 .card-6 {
     bottom: 20%;
-    left: 15%;
+    right: 15%;
     animation-delay: 5s;
 }
 
@@ -1025,31 +1025,31 @@ html {
     
     .card-1 {
         top: 5%;
-        left: 2%;
+        right: 2%;
     }
     
     .card-2 {
         top: 10%;
-        left: 12%;
+        right: 12%;
     }
     
     .card-3 {
         top: 40%;
-        left: 5%;
+        right: 5%;
     }
     
     .card-4 {
         top: 45%;
-        left: 15%;
+        right: 15%;
     }
     
     .card-5 {
         bottom: 10%;
-        left: 2%;
+        right: 2%;
     }
     
     .card-6 {
         bottom: 15%;
-        left: 12%;
+        right: 12%;
     }
 } 
