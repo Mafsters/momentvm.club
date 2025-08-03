@@ -86,6 +86,7 @@
         <button onclick="testNetlifyFunction()" class="btn">Test Netlify Function</button>
         <button onclick="testFormspree()" class="btn">Test Formspree</button>
         <button onclick="testEmailClient()" class="btn">Test Email Client</button>
+        <button onclick="testEmailJSSimple()" class="btn">Test EmailJS Playground Method</button>
     </div>
     
     <div class="test-section">
@@ -139,7 +140,7 @@
                 
                 emailjs.init('CH7Idv-T3WhDQYjtb');
                 
-                const result = await emailjs.send('service_lb1tvqc', 'template_1bsatl6', {
+                const result = await emailjs.send('default_service', 'template_1bsatl6', {
                     to_name: 'Test',
                     from_name: 'Test User',
                     from_email: 'test@example.com',
@@ -154,7 +155,7 @@
                 
                 console.log('EmailJS test successful:', result);
             } catch (error) {
-                console.error('EmailJS test failed:', error);
+                console.error('EmailJS test failed:', JSON.stringify(error, null, 2));
             }
         }
         
@@ -273,4 +274,35 @@ This is a test submission.
         // (You'll need to copy the relevant functions here or include script.js)
     </script>
 </body>
-</html> 
+</html>         // Simple EmailJS test matching playground
+        async function testEmailJSSimple() {
+            try {
+                console.log("Testing EmailJS with playground method...");
+                
+                if (typeof emailjs === "undefined") {
+                    throw new Error("EmailJS not loaded");
+                }
+                
+                emailjs.init("CH7Idv-T3WhDQYjtb");
+                
+                // Create a simple form element like in playground
+                const testForm = document.createElement("form");
+                testForm.innerHTML = `
+                    <input type="hidden" name="from_name" value="Test User">
+                    <input type="hidden" name="from_email" value="test@example.com">
+                    <input type="hidden" name="linkedin_url" value="https://linkedin.com/in/test">
+                    <input type="hidden" name="role" value="Test Role">
+                    <input type="hidden" name="company" value="Test Company">
+                    <input type="hidden" name="expertise" value="engineering">
+                    <input type="hidden" name="motivation" value="Test motivation">
+                    <input type="hidden" name="submission_date" value="${new Date().toLocaleString()}">
+                    <input type="hidden" name="email" value="test@example.com">
+                    <input type="hidden" name="name" value="Test User">
+                `;
+                
+                const result = await emailjs.sendForm("default_service", "template_1bsatl6", testForm);
+                console.log("EmailJS playground method successful:", result);
+            } catch (error) {
+                console.error("EmailJS playground method failed:", JSON.stringify(error, null, 2));
+            }
+        }
