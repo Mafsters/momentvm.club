@@ -548,18 +548,6 @@ function animateCountdown(element, target, duration = 2000) {
             element.textContent = Math.floor(start) + (element.textContent.includes("+") ? "+" : "");
         }
     }, 16);
-}    let start = 0;
-    const increment = target / (duration / 16);
-    
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            element.textContent = target + (element.textContent.includes('+') ? '+' : '');
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start) + (element.textContent.includes('+') ? '+' : '');
-        }
-    }, 16);
 }
 
 // Animate stats when they come into view
