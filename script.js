@@ -168,7 +168,7 @@ function validateForm(data) {
     
     // Email validation
     const email = document.getElementById('from_email');
-    if (data.from_email if (data.email && !isValidEmail(data.email))if (data.email && !isValidEmail(data.email)) !isValidEmail(data.from_email)) {
+    if (data.from_email && !isValidEmail(data.from_email)) {
         showFieldError(email, 'Please enter a valid email address');
         isValid = false;
     }
