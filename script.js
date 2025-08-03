@@ -262,7 +262,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Counter animation for stats
 function animateCounter(element, target, duration = 2000) {
-    let start = 0;
+}
+
+function animateCountdown(element, target, duration = 2000) {
+    let start = target;
+    const decrement = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        start -= decrement;
+        if (start <= 0) {
+            element.textContent = "0" + (element.textContent.includes("+") ? "+" : "");
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start) + (element.textContent.includes("+") ? "+" : "");
+        }
+    }, 16);
+}    let start = 0;
     const increment = target / (duration / 16);
     
     const timer = setInterval(() => {
@@ -280,20 +295,26 @@ function animateCounter(element, target, duration = 2000) {
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const statNumber = entry.target.querySelector('.stat-number');
+            const statNumber = entry.target.querySelector(".stat-number");
+            const statLabels = entry.target.querySelectorAll(".stat-label");
             const text = statNumber.textContent;
-            const number = parseInt(text.replace(/\D/g, ''));
+            const number = parseInt(text.replace(/\D/g, ""));
             
             if (number > 0) {
-                statNumber.textContent = '0' + (text.includes('+') ? '+' : '');
-                animateCounter(statNumber, number);
+                const isBSStat = Array.from(statLabels).some(label => label.textContent.includes("BS"));
+                if (isBSStat) {
+                    statNumber.textContent = target + (text.includes("+") ? "+" : "");
+                    animateCountdown(statNumber, number);
+                } else {
+                    statNumber.textContent = "0" + (text.includes("+") ? "+" : "");
+                    animateCounter(statNumber, number);
+                }
             }
             
             statsObserver.unobserve(entry.target);
         }
     });
 }, { threshold: 0.5 });
-
 document.addEventListener('DOMContentLoaded', function() {
     const statElements = document.querySelectorAll('.stat');
     statElements.forEach(stat => {
