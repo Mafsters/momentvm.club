@@ -230,7 +230,7 @@ function sendFormEmail(data, formType = 'application') {
 
         console.log('Attempting to send email with form data...');
         
-        const serviceID = 'default_service';
+        const serviceID = 'service_lb1tvqc';
         const templateID = 'template_1bsatl6';
         
         emailjs.sendForm(serviceID, templateID, form)
@@ -267,7 +267,7 @@ function sendFormEmail(data, formType = 'application') {
 
         console.log('Attempting to send email with form data...');
         
-        const serviceID = 'default_service';
+        const serviceID = 'service_lb1tvqc';
         const templateID = 'template_1bsatl6';
         
         emailjs.sendForm(serviceID, templateID, form)

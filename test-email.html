@@ -140,7 +140,7 @@
                 
                 emailjs.init('CH7Idv-T3WhDQYjtb');
                 
-                const result = await emailjs.send('default_service', 'template_1bsatl6', {
+                const result = await emailjs.send('service_lb1tvqc', 'template_1bsatl6', {
                     to_name: 'Test',
                     from_name: 'Test User',
                     from_email: 'test@example.com',
@@ -301,7 +301,7 @@ This is a test submission.
                     <input type="hidden" name="name" value="Test User">
                 `;
                 
-                const result = await emailjs.sendForm("default_service", "template_1bsatl6", testForm);
+                const result = await emailjs.sendForm("service_lb1tvqc", "template_1bsatl6", testForm);
                 console.log("EmailJS playground method successful:", result);
             } catch (error) {
                 console.error("EmailJS playground method failed:", JSON.stringify(error, null, 2));
