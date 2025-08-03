@@ -46,10 +46,49 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// Initialize EmailJS with proper error handling
+let emailjsInitialized = false;
+
+function initializeEmailJS() {
+    return new Promise((resolve, reject) => {
+        // Wait for EmailJS to be available
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        const checkEmailJS = () => {
+            attempts++;
+            
+            if (typeof emailjs !== 'undefined') {
+                try {
+                    emailjs.init('8Ti-BdFPIXQJRCnwa');
+                    emailjsInitialized = true;
+                    console.log('EmailJS initialized successfully');
+                    resolve();
+                } catch (error) {
+                    console.error('EmailJS initialization failed:', error);
+                    reject(error);
+                }
+            } else if (attempts < maxAttempts) {
+                console.log(`EmailJS not ready, attempt ${attempts}/${maxAttempts}`);
+                setTimeout(checkEmailJS, 500);
+            } else {
+                reject(new Error('EmailJS library not loaded after multiple attempts'));
+            }
+        };
+        
+        checkEmailJS();
+    });
+}
+
 // Form handling for both forms
 document.addEventListener('DOMContentLoaded', function() {
     const applicationForm = document.getElementById('applicationForm');
     const quickRegistrationForm = document.getElementById('quickRegistrationForm');
+    
+    // Initialize EmailJS when page loads
+    initializeEmailJS().catch(error => {
+        console.warn('EmailJS initialization failed, will use fallback method:', error);
+    });
     
     // Handle application form (about.html)
     if (applicationForm) {
@@ -85,7 +124,7 @@ function handleFormSubmission(form, formType) {
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
     
-    // Send form data via EmailJS
+    // Try EmailJS first, then fallback to alternative method
     sendFormEmail(data, formType)
         .then(() => {
             showSuccessPopup();
@@ -95,7 +134,18 @@ function handleFormSubmission(form, formType) {
         })
         .catch((error) => {
             console.error('Form submission error:', error);
-            showErrorPopup('Something went wrong. Please try again or contact us directly.');
+            // Try fallback method
+            return sendFormEmailFallback(data, formType);
+        })
+        .then(() => {
+            showSuccessPopup();
+            form.reset();
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        })
+        .catch((error) => {
+            console.error('All form submission methods failed:', error);
+            showErrorPopup('Something went wrong. Please try again or contact us directly at momentvmclub@gmail.com');
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
         });
@@ -162,29 +212,230 @@ function clearFieldError(input) {
     }
 }
 
-// Initialize EmailJS
-(function() {
-    // EmailJS user ID
-    emailjs.init('8Ti-BdFPIXQJRCnwa');
-})();
-
-// Send form data via EmailJS
+// Send form data via EmailJS with improved error handling
 function sendFormEmail(data, formType = 'application') {
-    // EmailJS service ID
-    const templateParams = {
-        to_name: 'Momentvm Team',
-        from_name: data.name,
-        from_email: data.email,
-        linkedin_url: data.linkedin,
-        role: data.role,
-        company: data.company || 'Not specified',
-        expertise: data.expertise,
-        motivation: data.motivation,
-        submission_date: new Date().toLocaleString(),
-        form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application'
-    };
+    return new Promise((resolve, reject) => {
+        if (!emailjsInitialized) {
+            reject(new Error('EmailJS not initialized'));
+            return;
+        }
+
+        // EmailJS service ID and template ID
+        const serviceID = 'service_lb1tvqc';
+        const templateID = 'template_1bsatl6';
+        
+        console.log('Attempting to send email with:', {
+            serviceID,
+            templateID,
+            formType,
+            dataKeys: Object.keys(data)
+        });
+        
+        const templateParams = {
+            to_name: 'Momentvm Team',
+            from_name: data.name,
+            from_email: data.email,
+            linkedin_url: data.linkedin || 'Not provided',
+            role: data.role,
+            company: data.company || 'Not specified',
+            expertise: data.expertise,
+            motivation: data.motivation,
+            submission_date: new Date().toLocaleString(),
+            form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application'
+        };
+        
+        console.log('Template params:', templateParams);
+        
+        emailjs.send(serviceID, templateID, templateParams)
+            .then((response) => {
+                console.log('EmailJS success:', response);
+                resolve(response);
+            })
+            .catch((error) => {
+                console.error('EmailJS error details:', {
+                    error: error,
+                    message: error.message,
+                    status: error.status,
+                    text: error.text
+                });
+                reject(error);
+            });
+    });
+}
+
+// Fallback method using multiple options
+function sendFormEmailFallback(data, formType = 'application') {
+    return new Promise((resolve, reject) => {
+        // First try Netlify function
+        fetch('/.netlify/functions/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...data,
+                form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application',
+                submission_date: new Date().toLocaleString()
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                resolve(result);
+            } else {
+                throw new Error(result.message || 'Netlify function failed');
+            }
+        })
+        .catch(error => {
+            console.warn('Netlify function failed, trying Formspree fallback:', error);
+            
+            // Try Formspree as second fallback
+            const formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('email', data.email);
+            formData.append('linkedin', data.linkedin || 'Not provided');
+            formData.append('role', data.role);
+            formData.append('company', data.company || 'Not specified');
+            formData.append('expertise', data.expertise);
+            formData.append('motivation', data.motivation);
+            formData.append('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
+            formData.append('submission_date', new Date().toLocaleString());
+            
+            fetch('https://formspree.io/f/xpzgwqjq', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    resolve(result);
+                } else {
+                    throw new Error('Formspree failed');
+                }
+            })
+            .catch(formspreeError => {
+                console.warn('Formspree failed, trying email client fallback:', formspreeError);
+                
+                // Final fallback to email client
+                const emailBody = `
+New Application Submission - ${formType === 'quick' ? 'Quick Registration' : 'Full Application'}
+
+Name: ${data.name}
+Email: ${data.email}
+LinkedIn: ${data.linkedin || 'Not provided'}
+Role: ${data.role}
+Company: ${data.company || 'Not specified'}
+Expertise: ${data.expertise}
+Motivation: ${data.motivation}
+Submission Date: ${new Date().toLocaleString()}
+
+---
+This submission was sent via the email client fallback method.
+                `;
+                
+                // Try to open default email client
+                const mailtoLink = `mailto:momentvmclub@gmail.com?subject=New Application: ${encodeURIComponent(data.name)}&body=${encodeURIComponent(emailBody)}`;
+                
+                // Create a temporary link and click it
+                const tempLink = document.createElement('a');
+                tempLink.href = mailtoLink;
+                tempLink.style.display = 'none';
+                document.body.appendChild(tempLink);
+                
+                try {
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    
+                    // Show a message to the user
+                    showInfoPopup('Email client opened. Please send the email manually if it doesn\'t send automatically.');
+                    resolve();
+                } catch (emailError) {
+                    document.body.removeChild(tempLink);
+                    reject(emailError);
+                }
+            });
+        });
+    });
+}
+
+// Show info popup
+function showInfoPopup(message) {
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
     
-    return emailjs.send('service_lb1tvqc', 'template_1bsatl6', templateParams);
+    const popup = document.createElement('div');
+    popup.className = 'info-popup';
+    popup.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        max-width: 400px;
+        margin: 1rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        animation: slideIn 0.3s ease;
+    `;
+    
+    popup.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <i class="fas fa-info-circle" style="font-size: 3rem; color: #3b82f6;"></i>
+        </div>
+        <h3 style="margin-bottom: 1rem; color: #1f2937;">Manual Email Required</h3>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            ${message}
+        </p>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            Or contact us directly at: <strong>momentvmclub@gmail.com</strong>
+        </p>
+        <button onclick="closePopup()" style="
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        " onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#3b82f6'">
+            Got it!
+        </button>
+    `;
+    
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+    
+    // Add CSS animations if not already added
+    if (!document.querySelector('style[data-animations]')) {
+        const style = document.createElement('style');
+        style.setAttribute('data-animations', 'true');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideIn {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 }
 
 // Show success popup
@@ -305,7 +556,7 @@ function showErrorPopup(message) {
             ${message}
         </p>
         <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
-            Please try again or contact us directly at hello@momentvm.club
+            Please try again or contact us directly at momentvmclub@gmail.com
         </p>
         <button onclick="closePopup()" style="
             background: #ef4444;

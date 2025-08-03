@@ -1,0 +1,26 @@
+{
+  "name": "momentvm-club",
+  "version": "1.0.0",
+  "description": "Momentvm.club - Premium Professional Community",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "keywords": [
+    "professional",
+    "community",
+    "networking",
+    "startup",
+    "founders"
+  ],
+  "author": "Momentvm Team",
+  "license": "MIT"
+} 
