@@ -507,7 +507,7 @@ body {
     text-align: center;
     transition: transform 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.05);
-    min-width: 280px;
+    width: 280px;
     flex-shrink: 0;
 }
 
@@ -882,7 +882,7 @@ body {
     }
     
     .member-card {
-        min-width: 250px;
+        width: 250px;
     }
     
     .testimonials-grid {
@@ -895,7 +895,7 @@ body {
         }
         
         .member-card {
-            min-width: 220px;
+            width: 220px;
         }
         
         .testimonials-grid {
