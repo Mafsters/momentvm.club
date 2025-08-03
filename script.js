@@ -153,7 +153,7 @@ function handleFormSubmission(form, formType) {
 
 // Form validation
 function validateForm(data) {
-    const requiredFields = ['name', 'email', 'role', 'expertise', 'motivation'];
+    const requiredFields = ['from_name', 'from_email', 'role', 'expertise', 'motivation'];
     let isValid = true;
     
     requiredFields.forEach(field => {
@@ -167,8 +167,8 @@ function validateForm(data) {
     });
     
     // Email validation
-    const email = document.getElementById('email');
-    if (data.email && !isValidEmail(data.email)) {
+    const email = document.getElementById('from_email');
+    if (data.from_email if (data.email && !isValidEmail(data.email))if (data.email && !isValidEmail(data.email)) !isValidEmail(data.from_email)) {
         showFieldError(email, 'Please enter a valid email address');
         isValid = false;
     }
@@ -228,23 +228,6 @@ function sendFormEmail(data, formType = 'application') {
             return;
         }
 
-        // Add missing fields to form if they don't exist
-        const addHiddenField = (name, value) => {
-            let field = form.querySelector(`input[name="${name}"]`);
-            if (!field) {
-                field = document.createElement('input');
-                field.type = 'hidden';
-                field.name = name;
-                form.appendChild(field);
-            }
-            field.value = value;
-        };
-
-        // Add the fields that EmailJS template expects
-        addHiddenField('to_name', 'Momentvm Team');
-        addHiddenField('submission_date', new Date().toLocaleString());
-        addHiddenField('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
-
         console.log('Attempting to send email with form data...');
         
         const serviceID = 'default_service';
@@ -281,23 +264,6 @@ function sendFormEmail(data, formType = 'application') {
             reject(new Error('Form not found'));
             return;
         }
-
-        // Add missing fields to form if they don't exist
-        const addHiddenField = (name, value) => {
-            let field = form.querySelector(`input[name="${name}"]`);
-            if (!field) {
-                field = document.createElement('input');
-                field.type = 'hidden';
-                field.name = name;
-                form.appendChild(field);
-            }
-            field.value = value;
-        };
-
-        // Add the fields that EmailJS template expects
-        addHiddenField('to_name', 'Momentvm Team');
-        addHiddenField('submission_date', new Date().toLocaleString());
-        addHiddenField('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
 
         console.log('Attempting to send email with form data...');
         
