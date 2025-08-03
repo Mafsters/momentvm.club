@@ -148,33 +148,28 @@ function clearFieldError(input) {
     }
 }
 
-// Send form data via email
+// Initialize EmailJS
+(function() {
+    // EmailJS user ID
+    emailjs.init('8Ti-BdFPIXQJRCnwa');
+})();
+
+// Send form data via EmailJS
 function sendFormEmail(data) {
-    // Using EmailJS service (you'll need to set this up)
-    // For now, we'll use a simple mailto link as fallback
-    const subject = 'New Momentvm.club Application';
-    const body = `
-New application received:
-
-Name: ${data.name}
-Email: ${data.email}
-LinkedIn: ${data.linkedin}
-Role: ${data.role}
-Company: ${data.company || 'Not specified'}
-Expertise: ${data.expertise}
-Motivation: ${data.motivation}
-
-Submitted on: ${new Date().toLocaleString()}
-    `;
+    // EmailJS service ID
+    const templateParams = {
+        to_name: 'Momentvm Team',
+        from_name: data.name,
+        from_email: data.email,
+        linkedin_url: data.linkedin,
+        role: data.role,
+        company: data.company || 'Not specified',
+        expertise: data.expertise,
+        motivation: data.motivation,
+        submission_date: new Date().toLocaleString()
+    };
     
-    // Create mailto link
-    const mailtoLink = `mailto:federico.maffini@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    // Open email client
-    window.open(mailtoLink);
-    
-    // Return a resolved promise to simulate successful submission
-    return Promise.resolve();
+    return emailjs.send('service_lb1tvqc', 'template_1bsatl6', templateParams);
 }
 
 // Show success message
