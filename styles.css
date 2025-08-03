@@ -472,6 +472,33 @@ body {
     gap: 2rem;
 }
 
+.members-carousel {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.members-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.members-carousel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.members-carousel::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.members-carousel::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
 .member-card {
     background: white;
     padding: 2rem;
@@ -480,6 +507,8 @@ body {
     text-align: center;
     transition: transform 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.05);
+    min-width: 280px;
+    flex-shrink: 0;
 }
 
 .member-card:hover {
@@ -848,8 +877,12 @@ body {
         }
     }
     
-    .members-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .members-carousel {
+        gap: 1.5rem;
+    }
+    
+    .member-card {
+        min-width: 250px;
     }
     
     .testimonials-grid {
@@ -857,6 +890,14 @@ body {
     }
     
     @media (max-width: 640px) {
+        .members-carousel {
+            gap: 1rem;
+        }
+        
+        .member-card {
+            min-width: 220px;
+        }
+        
         .testimonials-grid {
             grid-template-columns: 1fr;
         }
