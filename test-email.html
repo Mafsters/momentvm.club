@@ -94,7 +94,7 @@
         <button onclick="clearLog()" class="btn">Clear Log</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // Override console methods to capture logs
         const originalLog = console.log;
@@ -137,7 +137,7 @@
                     throw new Error('EmailJS not loaded');
                 }
                 
-                emailjs.init('8Ti-BdFPIXQJRCnwa');
+                emailjs.init('CH7Idv-T3WhDQYjtb');
                 
                 const result = await emailjs.send('service_lb1tvqc', 'template_1bsatl6', {
                     to_name: 'Test',
