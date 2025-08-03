@@ -213,7 +213,6 @@ function clearFieldError(input) {
 }
 
 // Send form data via EmailJS with improved error handling
-// Send form data via EmailJS with working method
 function sendFormEmail(data, formType = 'application') {
     return new Promise((resolve, reject) => {
         if (!emailjsInitialized) {
@@ -221,36 +220,33 @@ function sendFormEmail(data, formType = 'application') {
             return;
         }
 
-        // Get the form element
-        const form = document.getElementById('applicationForm') || document.getElementById('quickRegistrationForm');
-        if (!form) {
-            reject(new Error('Form not found'));
-            return;
-        }
-
-        // Add missing fields to form if they don't exist
-        const addHiddenField = (name, value) => {
-            let field = form.querySelector(`input[name="${name}"]`);
-            if (!field) {
-                field = document.createElement('input');
-                field.type = 'hidden';
-                field.name = name;
-                form.appendChild(field);
-            }
-            field.value = value;
-        };
-
-        // Add the fields that EmailJS template expects
-        addHiddenField('to_name', 'Momentvm Team');
-        addHiddenField('submission_date', new Date().toLocaleString());
-        addHiddenField('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
-
-        console.log('Attempting to send email with form data...');
-        
+        // EmailJS service ID and template ID
         const serviceID = 'default_service';
         const templateID = 'template_1bsatl6';
         
-        emailjs.sendForm(serviceID, templateID, form)
+        console.log('Attempting to send email with:', {
+            serviceID,
+            templateID,
+            formType,
+            dataKeys: Object.keys(data)
+        });
+        
+        const templateParams = {
+            to_name: 'Momentvm Team',
+            from_name: data.name,
+            from_email: data.email,
+            linkedin_url: data.linkedin || 'Not provided',
+            role: data.role,
+            company: data.company || 'Not specified',
+            expertise: data.expertise,
+            motivation: data.motivation,
+            submission_date: new Date().toLocaleString(),
+            form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application'
+        };
+        
+        console.log('Template params:', templateParams);
+        
+        emailjs.send(serviceID, templateID, templateParams)
             .then((response) => {
                 console.log('EmailJS success:', response);
                 resolve(response);
@@ -266,60 +262,105 @@ function sendFormEmail(data, formType = 'application') {
             });
     });
 }
+
 // Fallback method using multiple options
-// Send form data via EmailJS with working method
-function sendFormEmail(data, formType = 'application') {
+function sendFormEmailFallback(data, formType = 'application') {
     return new Promise((resolve, reject) => {
-        if (!emailjsInitialized) {
-            reject(new Error('EmailJS not initialized'));
-            return;
-        }
-
-        // Get the form element
-        const form = document.getElementById('applicationForm') || document.getElementById('quickRegistrationForm');
-        if (!form) {
-            reject(new Error('Form not found'));
-            return;
-        }
-
-        // Add missing fields to form if they don't exist
-        const addHiddenField = (name, value) => {
-            let field = form.querySelector(`input[name="${name}"]`);
-            if (!field) {
-                field = document.createElement('input');
-                field.type = 'hidden';
-                field.name = name;
-                form.appendChild(field);
-            }
-            field.value = value;
-        };
-
-        // Add the fields that EmailJS template expects
-        addHiddenField('to_name', 'Momentvm Team');
-        addHiddenField('submission_date', new Date().toLocaleString());
-        addHiddenField('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
-
-        console.log('Attempting to send email with form data...');
-        
-        const serviceID = 'default_service';
-        const templateID = 'template_1bsatl6';
-        
-        emailjs.sendForm(serviceID, templateID, form)
-            .then((response) => {
-                console.log('EmailJS success:', response);
-                resolve(response);
+        // First try Netlify function
+        fetch('/.netlify/functions/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...data,
+                form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application',
+                submission_date: new Date().toLocaleString()
             })
-            .catch((error) => {
-                console.error('EmailJS error details:', {
-                    error: error,
-                    message: error.message,
-                    status: error.status,
-                    text: error.text
-                });
-                reject(error);
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                resolve(result);
+            } else {
+                throw new Error(result.message || 'Netlify function failed');
+            }
+        })
+        .catch(error => {
+            console.warn('Netlify function failed, trying Formspree fallback:', error);
+            
+            // Try Formspree as second fallback
+            const formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('email', data.email);
+            formData.append('linkedin', data.linkedin || 'Not provided');
+            formData.append('role', data.role);
+            formData.append('company', data.company || 'Not specified');
+            formData.append('expertise', data.expertise);
+            formData.append('motivation', data.motivation);
+            formData.append('form_type', formType === 'quick' ? 'Quick Registration' : 'Full Application');
+            formData.append('submission_date', new Date().toLocaleString());
+            
+            fetch('https://formspree.io/f/xpzgwqjq', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    resolve(result);
+                } else {
+                    throw new Error('Formspree failed');
+                }
+            })
+            .catch(formspreeError => {
+                console.warn('Formspree failed, trying email client fallback:', formspreeError);
+                
+                // Final fallback to email client
+                const emailBody = `
+New Application Submission - ${formType === 'quick' ? 'Quick Registration' : 'Full Application'}
+
+Name: ${data.name}
+Email: ${data.email}
+LinkedIn: ${data.linkedin || 'Not provided'}
+Role: ${data.role}
+Company: ${data.company || 'Not specified'}
+Expertise: ${data.expertise}
+Motivation: ${data.motivation}
+Submission Date: ${new Date().toLocaleString()}
+
+---
+This submission was sent via the email client fallback method.
+                `;
+                
+                // Try to open default email client
+                const mailtoLink = `mailto:momentvmclub@gmail.com?subject=New Application: ${encodeURIComponent(data.name)}&body=${encodeURIComponent(emailBody)}`;
+                
+                // Create a temporary link and click it
+                const tempLink = document.createElement('a');
+                tempLink.href = mailtoLink;
+                tempLink.style.display = 'none';
+                document.body.appendChild(tempLink);
+                
+                try {
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    
+                    // Show a message to the user
+                    showInfoPopup('Email client opened. Please send the email manually if it doesn\'t send automatically.');
+                    resolve();
+                } catch (emailError) {
+                    document.body.removeChild(tempLink);
+                    reject(emailError);
+                }
             });
+        });
     });
 }
+
 // Show info popup
 function showInfoPopup(message) {
     const overlay = document.createElement('div');
