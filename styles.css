@@ -308,7 +308,7 @@ body {
 
 .benefits-content {
     display: grid;
-    grid-template-columns: 0.3fr 4fr;
+    grid-template-columns: 4fr 1fr;
     gap: 4rem;
     align-items: start;
 }
@@ -354,7 +354,6 @@ body {
     color: white;
     position: sticky;
     top: 100px;
-    max-width: 300px;
     width: 100%;
 }
 .highlight-content h4 {
