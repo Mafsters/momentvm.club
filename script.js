@@ -46,46 +46,60 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Form handling
+// Form handling for both forms
 document.addEventListener('DOMContentLoaded', function() {
     const applicationForm = document.getElementById('applicationForm');
+    const quickRegistrationForm = document.getElementById('quickRegistrationForm');
     
+    // Handle application form (about.html)
     if (applicationForm) {
         applicationForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Basic validation
-            if (!validateForm(data)) {
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-            
-            // Send form data via email
-            sendFormEmail(data)
-                .then(() => {
-                    showSuccessMessage();
-                    this.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                })
-                .catch((error) => {
-                    console.error('Form submission error:', error);
-                    showErrorMessage('Something went wrong. Please try again or contact us directly.');
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                });
+            handleFormSubmission(this, 'application');
+        });
+    }
+    
+    // Handle quick registration form (index.html)
+    if (quickRegistrationForm) {
+        quickRegistrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission(this, 'quick');
         });
     }
 });
+
+// Unified form submission handler
+function handleFormSubmission(form, formType) {
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    // Basic validation
+    if (!validateForm(data)) {
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.disabled = true;
+    
+    // Send form data via EmailJS
+    sendFormEmail(data, formType)
+        .then(() => {
+            showSuccessPopup();
+            form.reset();
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        })
+        .catch((error) => {
+            console.error('Form submission error:', error);
+            showErrorPopup('Something went wrong. Please try again or contact us directly.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+}
 
 // Form validation
 function validateForm(data) {
@@ -155,7 +169,7 @@ function clearFieldError(input) {
 })();
 
 // Send form data via EmailJS
-function sendFormEmail(data) {
+function sendFormEmail(data, formType = 'application') {
     // EmailJS service ID
     const templateParams = {
         to_name: 'Momentvm Team',
@@ -166,66 +180,177 @@ function sendFormEmail(data) {
         company: data.company || 'Not specified',
         expertise: data.expertise,
         motivation: data.motivation,
-        submission_date: new Date().toLocaleString()
+        submission_date: new Date().toLocaleString(),
+        form_type: formType === 'quick' ? 'Quick Registration' : 'Full Application'
     };
     
     return emailjs.send('service_lb1tvqc', 'template_1bsatl6', templateParams);
 }
 
-// Show success message
-function showSuccessMessage() {
-    const form = document.getElementById('applicationForm');
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.style.cssText = `
-        background: #f0fdf4;
-        border: 1px solid #10b981;
-        color: #065f46;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+// Show success popup
+function showSuccessPopup() {
+    // Create popup overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    // Create popup content
+    const popup = document.createElement('div');
+    popup.className = 'success-popup';
+    popup.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
         text-align: center;
-        font-weight: 500;
-    `;
-    successDiv.innerHTML = `
-        <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
-        Thank you! Your application has been submitted successfully. We'll review it and get back to you within 48 hours.
+        max-width: 400px;
+        margin: 1rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        animation: slideIn 0.3s ease;
     `;
     
-    form.parentNode.insertBefore(successDiv, form);
+    popup.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #10b981;"></i>
+        </div>
+        <h3 style="margin-bottom: 1rem; color: #1f2937;">Application Submitted!</h3>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            Thank you for your application to Momentvm.club! We've received your submission and will review it carefully.
+        </p>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            You can expect to hear back from us within 48 hours.
+        </p>
+        <button onclick="closePopup()" style="
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        " onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#1e40af'">
+            Got it!
+        </button>
+    `;
     
-    // Remove success message after 5 seconds
-    setTimeout(() => {
-        successDiv.remove();
-    }, 5000);
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+    
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
 }
 
-// Show error message
-function showErrorMessage(message) {
-    const form = document.getElementById('applicationForm');
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.style.cssText = `
-        background: #fef2f2;
-        border: 1px solid #ef4444;
-        color: #991b1b;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
+// Show error popup
+function showErrorPopup(message) {
+    // Create popup overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
+    
+    // Create popup content
+    const popup = document.createElement('div');
+    popup.className = 'error-popup';
+    popup.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
         text-align: center;
-        font-weight: 500;
-    `;
-    errorDiv.innerHTML = `
-        <i class="fas fa-exclamation-circle" style="margin-right: 0.5rem;"></i>
-        ${message}
+        max-width: 400px;
+        margin: 1rem;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        animation: slideIn 0.3s ease;
     `;
     
-    form.parentNode.insertBefore(errorDiv, form);
+    popup.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444;"></i>
+        </div>
+        <h3 style="margin-bottom: 1rem; color: #1f2937;">Oops! Something went wrong</h3>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            ${message}
+        </p>
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1.5rem;">
+            Please try again or contact us directly at hello@momentvm.club
+        </p>
+        <button onclick="closePopup()" style="
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        " onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+            Try Again
+        </button>
+    `;
     
-    // Remove error message after 5 seconds
-    setTimeout(() => {
-        errorDiv.remove();
-    }, 5000);
+    overlay.appendChild(popup);
+    document.body.appendChild(overlay);
+    
+    // Add CSS animations if not already added
+    if (!document.querySelector('style[data-animations]')) {
+        const style = document.createElement('style');
+        style.setAttribute('data-animations', 'true');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideIn {
+                from { transform: translateY(-20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// Close popup function
+function closePopup() {
+    const overlay = document.querySelector('.popup-overlay');
+    if (overlay) {
+        overlay.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            overlay.remove();
+        }, 300);
+    }
 }
 
 // Intersection Observer for animations
