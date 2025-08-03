@@ -413,12 +413,69 @@
                 </div>
                 <div class="apply-form">
                     <form id="applicationForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin">LinkedIn Profile URL *</label>
+                            <input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/your-profile" required>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="role">Current Role *</label>
                                 <input type="text" id="role" name="role" placeholder="e.g., Growth Lead, CTO, Founder" required>
                             </div>
                             <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="expertise">Primary Expertise *</label>
+                            <select id="expertise" name="expertise" required>
+                                <option value="">Select your expertise</option>
+                                <!-- Most Common -->
+                                <option value="engineering">Engineering & Product</option>
+                                <option value="marketing">Marketing, Creative & Growth</option>
+                                <option value="sales">Sales & Business Development</option>
+                                <option value="finance">Finance</option>
+                                <option value="biz_ops">Business Operations</option>
+                                <option value="sales_ops">Sales Ops & Enablement</option>
+                                <option value="product_management">Product Management</option>
+                                <option value="hr">Human Resources & Recruitment</option>
+                                <option value="analytics">Business Analytics & Data Science</option>
+                                <option value="design">UX/UI Design</option>
+                    
+                                <!-- Common -->
+                                <option value="project_management">Project & Program Management</option>
+                                <option value="customer_success">Customer Success & Support</option>
+                                
+                                <!-- Specialized -->
+                                <option value="security">Security & Compliance</option>
+                                <option value="legal">Legal & Regulatory Affairs</option>
+                                <option value="partnerships">Partnerships & Alliances</option>
+                                <option value="communications">Communications & PR</option>
+                                <option value="supply_chain">Supply Chain & Logistics</option>
+                                
+                                <!-- Emerging/Niche -->
+                                <option value="ai_ml">AI/ML Engineering</option>
+                                <option value="blockchain">Blockchain & Web3</option>
+                                <option value="sustainability">Sustainability & ESG</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="motivation">Why should we let you in? *</label>
+                            <textarea id="motivation" name="motivation" rows="4" placeholder="What is your area of expertise? What are you looking to achieve? What are you willing to contribute?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Apply Now</button>
+                    </form>
+                </div>                            <div class="form-group">
                                 <label for="company">Company</label>
                                 <input type="text" id="company" name="company">
                             </div>
