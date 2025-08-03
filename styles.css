@@ -968,38 +968,38 @@ html {
 }
 
 .card-1 {
-    top: 10%;
-    right: 5%;
+    top: 20%;
+    right: 25%;
     animation-delay: 0s;
 }
 
 .card-2 {
-    top: 15%;
-    right: 15%;
+    top: 25%;
+    right: 35%;
     animation-delay: 1s;
 }
 
 .card-3 {
-    top: 50%;
-    right: 10%;
+    top: 45%;
+    right: 30%;
     animation-delay: 2s;
 }
 
 .card-4 {
-    top: 55%;
-    right: 20%;
+    top: 50%;
+    right: 40%;
     animation-delay: 3s;
 }
 
 .card-5 {
-    bottom: 15%;
-    right: 5%;
+    bottom: 25%;
+    right: 25%;
     animation-delay: 4s;
 }
 
 .card-6 {
-    bottom: 20%;
-    right: 15%;
+    bottom: 30%;
+    right: 35%;
     animation-delay: 5s;
 }
 
@@ -1024,32 +1024,32 @@ html {
     }
     
     .card-1 {
-        top: 5%;
-        right: 2%;
+        top: 15%;
+        right: 20%;
     }
     
     .card-2 {
-        top: 10%;
-        right: 12%;
+        top: 20%;
+        right: 30%;
     }
     
     .card-3 {
         top: 40%;
-        right: 5%;
+        right: 25%;
     }
     
     .card-4 {
         top: 45%;
-        right: 15%;
+        right: 35%;
     }
     
     .card-5 {
-        bottom: 10%;
-        right: 2%;
+        bottom: 20%;
+        right: 20%;
     }
     
     .card-6 {
-        bottom: 15%;
-        right: 12%;
+        bottom: 25%;
+        right: 30%;
     }
 } 
