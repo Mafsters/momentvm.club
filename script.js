@@ -741,3 +741,52 @@ window.addEventListener('scroll', function() {
         console.log("Form element:", form);
         console.log("Form data:", data);
         console.log("Form type:", formType);
+        // Add debugging to form submission
+        console.log("=== FORM SUBMISSION DEBUG ===");
+        console.log("Form submission started");
+        console.log("Form element:", form);
+        console.log("Form ID:", form ? form.id : "NOT FOUND");
+        console.log("Form data:", data);
+        console.log("Form type:", formType);
+        console.log("EmailJS initialized:", emailjsInitialized);
+        console.log("EmailJS available:", typeof emailjs !== "undefined");
+        console.log("=== END DEBUG ===");
+        // Manual test function
+        window.testFormSubmission = function() {
+            console.log("=== MANUAL FORM TEST ===");
+            
+            // Check if EmailJS is loaded
+            console.log("EmailJS available:", typeof emailjs !== "undefined");
+            
+            // Check if forms exist
+            const appForm = document.getElementById("applicationForm");
+            const quickForm = document.getElementById("quickRegistrationForm");
+            console.log("Application form:", appForm);
+            console.log("Quick form:", quickForm);
+            
+            // Check form fields
+            if (appForm) {
+                const fields = appForm.querySelectorAll("input, select, textarea");
+                console.log("Form fields:");
+                fields.forEach(field => {
+                    console.log(`  ${field.name}: ${field.value}`);
+                });
+            }
+            
+            // Test EmailJS initialization
+            try {
+                emailjs.init("CH7Idv-T3WhDQYjtb");
+                console.log("EmailJS initialized successfully");
+                
+                // Test sending
+                if (appForm) {
+                    emailjs.sendForm("service_lb1tvqc", "template_1bsatl6", appForm)
+                        .then(response => console.log("Manual test success:", response))
+                        .catch(error => console.error("Manual test error:", error));
+                }
+            } catch (error) {
+                console.error("EmailJS initialization failed:", error);
+            }
+            
+            console.log("=== END MANUAL TEST ===");
+        };
