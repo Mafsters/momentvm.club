@@ -7,7 +7,6 @@ function initializeEmailJS() {
         emailjsInitialized = true;
         console.log('EmailJS initialized successfully');
     } else {
-        console.log('EmailJS not loaded yet, retrying...');
         setTimeout(initializeEmailJS, 100);
     }
 }
@@ -16,7 +15,6 @@ function initializeEmailJS() {
 if (typeof emailjs !== 'undefined') {
     initializeEmailJS();
 } else {
-    // Wait for EmailJS to load
     const checkEmailJS = () => {
         if (typeof emailjs !== 'undefined') {
             initializeEmailJS();
@@ -50,7 +48,6 @@ function handleFormSubmission(form, formType) {
     
     // Validate form
     if (!validateForm(data)) {
-        console.log('Form validation failed');
         return;
     }
     
