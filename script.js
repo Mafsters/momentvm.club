@@ -258,5 +258,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    console.log('Forms initialized');
+    // Initialize stats animation
+    const statElements = document.querySelectorAll('.stat');
+    statElements.forEach(stat => {
+        statsObserver.observe(stat);
+    });
+    
+    console.log('Forms and stats initialized');
 }); 
+// Stats animation functions
+function animateCounter(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+            element.textContent = target + (element.textContent.includes('+') ? '+' : '');
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start) + (element.textContent.includes('+') ? '+' : '');
+        }
+    }, 16);
+}
+
+function animateCountdown(element, target, duration = 2000) {
+    let start = target;
+    const decrement = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        start -= decrement;
+        if (start <= 0) {
+            element.textContent = "0" + (element.textContent.includes("+") ? "+" : "");
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start) + (element.textContent.includes("+") ? "+" : "");
+        }
+    }, 16);
+}
+
+// Animate stats when they come into view
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target.querySelector(".stat-number");
+            const statLabels = entry.target.querySelectorAll(".stat-label");
+            const text = statNumber.textContent;
+            const number = parseInt(text.replace(/\D/g, ""));
+            
+            if (number > 0) {
+                const isBSStat = Array.from(statLabels).some(label => label.textContent.includes("BS"));
+                if (isBSStat) {
+                    statNumber.textContent = "100" + (text.includes("+") ? "+" : "");
+                    animateCountdown(statNumber, number);
+                } else {
+                    statNumber.textContent = "0" + (text.includes("+") ? "+" : "");
+                    animateCounter(statNumber, number);
+                }
+            }
+            
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
