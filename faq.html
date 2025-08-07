@@ -53,7 +53,7 @@
         <div class="container">
             <div class="faq-list">
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Who is this community for?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>How is membership approved?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Why is it free? What's the catch?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>How active do I need to be?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -93,7 +93,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>What do members get access to?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Can I promote my business or services?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>What tools do I need to use?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -123,7 +123,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Can I invite others?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Will this ever be paid?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
                         <h3>Who's behind Momentvm?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -190,40 +190,47 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
     <script>
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
-            const icon = element.querySelector('i');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all FAQ questions
+            const faqQuestions = document.querySelectorAll('.faq-question');
             
-            // Close all other FAQs
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                    const otherAnswer = item.querySelector('.faq-answer');
-                    const otherIcon = item.querySelector('i');
-                    otherAnswer.style.maxHeight = '0px';
-                    otherIcon.classList.remove('fa-chevron-up');
-                    otherIcon.classList.add('fa-chevron-down');
-                }
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const faqItem = this.parentElement;
+                    const answer = faqItem.querySelector('.faq-answer');
+                    const icon = this.querySelector('i');
+                    
+                    // Close all other FAQs
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            const otherAnswer = item.querySelector('.faq-answer');
+                            const otherIcon = item.querySelector('i');
+                            otherAnswer.style.maxHeight = '0px';
+                            otherIcon.classList.remove('fa-chevron-up');
+                            otherIcon.classList.add('fa-chevron-down');
+                        }
+                    });
+                    
+                    // Toggle current FAQ
+                    const isActive = faqItem.classList.contains('active');
+                    
+                    if (!isActive) {
+                        // Opening
+                        faqItem.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        // Closing
+                        faqItem.classList.remove('active');
+                        answer.style.maxHeight = '0px';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
             });
-            
-            // Toggle current FAQ
-            const isActive = faqItem.classList.contains('active');
-            
-            if (!isActive) {
-                // Opening
-                faqItem.classList.add('active');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-up');
-            } else {
-                // Closing
-                faqItem.classList.remove('active');
-                answer.style.maxHeight = '0px';
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            }
-        }
+        });
     </script>
 </body>
 </html> 
