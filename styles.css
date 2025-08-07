@@ -743,8 +743,19 @@ body {
 
 /* Slimmer Hero for FAQ */
 .hero .hero-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: auto;
+}
+
+.hero .hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.hero .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0;
 }
 
 /* FAQ Section */
