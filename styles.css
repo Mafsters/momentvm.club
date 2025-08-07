@@ -741,6 +741,12 @@ body {
     min-height: 100px;
 }
 
+/* Slimmer Hero for FAQ */
+.hero .hero-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
 /* FAQ Section */
 .faq-section {
     padding: 80px 0;
@@ -803,6 +809,7 @@ body {
     overflow: hidden;
     transition: max-height 0.3s ease;
     background: #f8fafc;
+    padding: 0;
 }
 
 .faq-answer p {
