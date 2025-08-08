@@ -103,9 +103,11 @@
         </div>
     </section>
 
-    <!-- Quiz Section -->
-    <section class="quiz-section">
-        <div class="container">
+    <!-- Quiz Popup Modal -->
+    <div class="quiz-modal" id="quiz-modal">
+        <div class="quiz-modal-overlay" onclick="closeQuizModal()"></div>
+        <div class="quiz-modal-content">
+            <button class="quiz-modal-close" onclick="closeQuizModal()">×</button>
             <div class="quiz-container">
                 <h2>Not sure if you're a good fit?</h2>
                 <p class="quiz-intro">Take this quick 2-minute quiz to see if Momentvm is right for you.</p>
@@ -189,7 +191,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer --> 
     <footer class="footer">

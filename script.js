@@ -20,10 +20,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Quiz Functionality
+// Quiz Modal Functionality
 let currentQuestion = 1;
 const totalQuestions = 4;
 let quizAnswers = {};
+
+// Show quiz modal on page load (with a small delay)
+document.addEventListener('DOMContentLoaded', function() {
+    // Show quiz modal after 2 seconds
+    setTimeout(() => {
+        showQuizModal();
+    }, 2000);
+});
+
+function showQuizModal() {
+    const modal = document.getElementById('quiz-modal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeQuizModal() {
+    const modal = document.getElementById('quiz-modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+    
+    // Reset quiz when closing
+    restartQuiz();
+}
 
 function nextQuestion() {
     const currentQuestionElement = document.querySelector(`[data-question="${currentQuestion}"]`);
@@ -95,10 +118,13 @@ function showQuizResults() {
 }
 
 function scrollToForm() {
-    document.getElementById('quickRegistrationForm').scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-    });
+    closeQuizModal(); // Close the modal first
+    setTimeout(() => {
+        document.getElementById('quickRegistrationForm').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, 300); // Small delay to allow modal to close
 }
 
 function restartQuiz() {

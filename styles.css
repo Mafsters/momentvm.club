@@ -758,16 +758,86 @@ body {
     margin-bottom: 0;
 }
 
-/* Quiz Section */
-.quiz-section {
-    padding: 80px 0;
-    background: #f8fafc;
+/* Quiz Modal */
+.quiz-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+.quiz-modal.active {
+    display: flex;
+}
+
+.quiz-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.quiz-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.quiz-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #64748b;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.quiz-modal-close:hover {
+    background: #f1f5f9;
+    color: #1e3a8a;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .quiz-container {
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
+    padding: 2rem;
 }
 
 .quiz-container h2 {
@@ -1349,13 +1419,21 @@ html {
         display: none;
     }
     
+    .quiz-modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .quiz-container {
+        padding: 1.5rem;
+    }
+    
     .quiz {
-        padding: 2rem;
-        margin: 0 1rem;
+        padding: 1.5rem;
     }
     
     .quiz-container h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .quiz-option {
@@ -1369,5 +1447,11 @@ html {
     .result-actions {
         flex-direction: column;
         align-items: center;
+    }
+    
+    .quiz-modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 1.5rem;
     }
 } 
