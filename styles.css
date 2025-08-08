@@ -928,10 +928,35 @@ body {
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-menu.active {
+        display: flex;
     }
     
     .nav-toggle {
         display: flex;
+    }
+    
+    .nav-toggle.active .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    
+    .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
     }
     
     .hero-container {
@@ -1183,47 +1208,15 @@ html {
 } 
 
 @media (max-width: 768px) {
+    .hero-visual {
+        display: none;
+    }
+    
     .floating-cards-section {
-        height: 300px;
-        padding: 40px 0;
+        display: none;
     }
     
     .floating-card {
-        padding: 1rem;
-        font-size: 0.8rem;
-    }
-    
-    .floating-card i {
-        font-size: 1.2rem;
-    }
-    
-    .card-1 {
-        top: 15%;
-        right: 20%;
-    }
-    
-    .card-2 {
-        top: 20%;
-        right: 30%;
-    }
-    
-    .card-3 {
-        top: 40%;
-        right: 25%;
-    }
-    
-    .card-4 {
-        top: 45%;
-        right: 35%;
-    }
-    
-    .card-5 {
-        bottom: 20%;
-        right: 20%;
-    }
-    
-    .card-6 {
-        bottom: 25%;
-        right: 30%;
+        display: none;
     }
 } 
