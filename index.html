@@ -103,6 +103,94 @@
         </div>
     </section>
 
+    <!-- Quiz Section -->
+    <section class="quiz-section">
+        <div class="container">
+            <div class="quiz-container">
+                <h2>Not sure if you're a good fit?</h2>
+                <p class="quiz-intro">Take this quick 2-minute quiz to see if Momentvm is right for you.</p>
+                
+                <div class="quiz" id="quiz">
+                    <div class="quiz-question active" data-question="1">
+                        <h3>Question 1 of 4</h3>
+                        <p class="question-text">Do you have experience in any of these areas?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="yes">
+                                <span class="option-text">Yes - I've worked in tech, business, marketing, sales, or operations</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q1" value="no">
+                                <span class="option-text">No - I'm completely new to these fields</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-question="2">
+                        <h3>Question 2 of 4</h3>
+                        <p class="question-text">Are you willing to help others by sharing your knowledge and experiences?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="yes">
+                                <span class="option-text">Absolutely - I love helping others learn and grow</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q2" value="no">
+                                <span class="option-text">Not really - I prefer to just learn from others</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-question="3">
+                        <h3>Question 3 of 4</h3>
+                        <p class="question-text">Do you have questions or challenges you'd like help with?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="yes">
+                                <span class="option-text">Yes - I have specific problems I'm trying to solve</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q3" value="no">
+                                <span class="option-text">No - I'm just looking to network</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-question="4">
+                        <h3>Question 4 of 4</h3>
+                        <p class="question-text">Can you commit to being active in the community (asking/answering questions monthly)?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option">
+                                <input type="radio" name="q4" value="yes">
+                                <span class="option-text">Yes - I'm ready to contribute regularly</span>
+                            </label>
+                            <label class="quiz-option">
+                                <input type="radio" name="q4" value="no">
+                                <span class="option-text">No - I prefer to just observe</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-result" id="quiz-result">
+                        <div class="result-content">
+                            <h3 id="result-title">Quiz Complete!</h3>
+                            <p id="result-message"></p>
+                            <div class="result-actions">
+                                <button class="btn btn-primary" onclick="scrollToForm()">Apply Now</button>
+                                <button class="btn btn-secondary" onclick="restartQuiz()">Take Quiz Again</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-navigation">
+                        <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()" style="display: none;">Previous</button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer --> 
     <footer class="footer">
         <div class="container">

@@ -20,6 +20,108 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Quiz Functionality
+let currentQuestion = 1;
+const totalQuestions = 4;
+let quizAnswers = {};
+
+function nextQuestion() {
+    const currentQuestionElement = document.querySelector(`[data-question="${currentQuestion}"]`);
+    const selectedOption = currentQuestionElement.querySelector('input[type="radio"]:checked');
+    
+    if (!selectedOption) {
+        alert('Please select an answer before continuing.');
+        return;
+    }
+    
+    // Store the answer
+    quizAnswers[`q${currentQuestion}`] = selectedOption.value;
+    
+    if (currentQuestion < totalQuestions) {
+        // Move to next question
+        currentQuestionElement.classList.remove('active');
+        currentQuestion++;
+        document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('active');
+        
+        // Update navigation buttons
+        document.getElementById('prev-btn').style.display = 'block';
+        if (currentQuestion === totalQuestions) {
+            document.getElementById('next-btn').textContent = 'See Results';
+        }
+    } else {
+        // Show results
+        showQuizResults();
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestion > 1) {
+        const currentQuestionElement = document.querySelector(`[data-question="${currentQuestion}"]`);
+        currentQuestionElement.classList.remove('active');
+        currentQuestion--;
+        document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('active');
+        
+        // Update navigation buttons
+        if (currentQuestion === 1) {
+            document.getElementById('prev-btn').style.display = 'none';
+        }
+        document.getElementById('next-btn').textContent = 'Next';
+    }
+}
+
+function showQuizResults() {
+    // Hide current question and navigation
+    document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('active');
+    document.querySelector('.quiz-navigation').style.display = 'none';
+    
+    // Calculate results
+    const yesAnswers = Object.values(quizAnswers).filter(answer => answer === 'yes').length;
+    const resultElement = document.getElementById('quiz-result');
+    const resultTitle = document.getElementById('result-title');
+    const resultMessage = document.getElementById('result-message');
+    
+    if (yesAnswers >= 3) {
+        resultTitle.textContent = "You're a great fit! 🎉";
+        resultMessage.textContent = "Based on your answers, you'd be a valuable addition to our community. You have the right mindset and experience to contribute meaningfully while learning from others. We'd love to have you join us!";
+    } else if (yesAnswers >= 2) {
+        resultTitle.textContent = "You might be a good fit! 🤔";
+        resultMessage.textContent = "You have some of the qualities we're looking for, but there might be areas where you could grow. Consider applying anyway - we value potential and willingness to contribute over perfect qualifications.";
+    } else {
+        resultTitle.textContent = "Maybe not the right time 😊";
+        resultMessage.textContent = "Based on your answers, this community might not be the best fit for you right now. That's totally okay! Focus on building your experience and skills, and feel free to apply again in the future.";
+    }
+    
+    resultElement.classList.add('active');
+}
+
+function scrollToForm() {
+    document.getElementById('quickRegistrationForm').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+function restartQuiz() {
+    // Reset quiz state
+    currentQuestion = 1;
+    quizAnswers = {};
+    
+    // Reset all questions
+    document.querySelectorAll('.quiz-question').forEach(q => q.classList.remove('active'));
+    document.querySelector(`[data-question="1"]`).classList.add('active');
+    
+    // Reset navigation
+    document.getElementById('prev-btn').style.display = 'none';
+    document.getElementById('next-btn').textContent = 'Next';
+    document.querySelector('.quiz-navigation').style.display = 'flex';
+    
+    // Hide results
+    document.getElementById('quiz-result').classList.remove('active');
+    
+    // Clear all radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+}
+
 // Initialize EmailJS
 let emailjsInitialized = false;
 
