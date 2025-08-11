@@ -149,6 +149,7 @@ body {
     display: flex;
     gap: 1.5rem;
     margin-bottom: 3rem;
+    justify-content: center;
 }
 
 .btn {
@@ -1328,9 +1329,11 @@ body {
     margin: 0 auto;
 }
 
-.hero-container[style*="grid-template-columns: 1fr"] .hero-cta {
-    justify-content: center;
+.community-cta {
+    justify-content: center !important;
     gap: 1.5rem;
+    width: 100%;
+    display: flex;
 }
 
 /* Smooth Scrolling */
