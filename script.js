@@ -424,25 +424,25 @@ function animateCounter(element, target, duration = 2000) {
     const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-            element.textContent = target + (element.textContent.includes('+') ? '+' : '');
+            element.textContent = target + "%";
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(start) + (element.textContent.includes('+') ? '+' : '');
+            element.textContent = Math.floor(start) + "%";
         }
     }, 16);
 }
 
 function animateCountdown(element, target, duration = 2000) {
-    let start = target;
-    const decrement = target / (duration / 16);
+    let start = 100; // Always start from 100 for countdown
+    const decrement = 100 / (duration / 16);
     
     const timer = setInterval(() => {
         start -= decrement;
-        if (start <= 0) {
-            element.textContent = "0" + (element.textContent.includes("+") ? "+" : "");
+        if (start <= target) {
+            element.textContent = target + "%";
             clearInterval(timer);
         } else {
-            element.textContent = Math.floor(start) + (element.textContent.includes("+") ? "+" : "");
+            element.textContent = Math.floor(start) + "%";
         }
     }, 16);
 }
@@ -456,15 +456,17 @@ const statsObserver = new IntersectionObserver((entries) => {
             const text = statNumber.textContent;
             const number = parseInt(text.replace(/\D/g, ""));
             
-            if (number > 0) {
-                const isBSStat = Array.from(statLabels).some(label => label.textContent.includes("BS"));
-                if (isBSStat) {
-                    statNumber.textContent = "100" + (text.includes("+") ? "+" : "");
-                    animateCountdown(statNumber, number);
-                } else {
-                    statNumber.textContent = "0" + (text.includes("+") ? "+" : "");
-                    animateCounter(statNumber, number);
-                }
+            // Check if this is the BS stat (the one that should count down from 100 to 0)
+            const isBSStat = Array.from(statLabels).some(label => label.textContent.includes("BS"));
+            
+            if (isBSStat) {
+                // For BS stat: start at 100 and count down to 0
+                statNumber.textContent = "100";
+                animateCountdown(statNumber, 0);
+            } else {
+                // For other stats: start at 0 and count up to target
+                statNumber.textContent = "0";
+                animateCounter(statNumber, number);
             }
             
             statsObserver.unobserve(entry.target);
