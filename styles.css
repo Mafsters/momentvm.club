@@ -1322,6 +1322,17 @@ body {
     }
 }
 
+/* Community Page Specific Styles */
+.hero-container[style*="grid-template-columns: 1fr"] .hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-container[style*="grid-template-columns: 1fr"] .hero-cta {
+    justify-content: center;
+    gap: 1.5rem;
+}
+
 /* Smooth Scrolling */
 html {
     scroll-behavior: smooth;
