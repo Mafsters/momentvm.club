@@ -1331,9 +1331,16 @@ body {
 
 .community-cta {
     justify-content: center !important;
+    align-items: center !important;
     gap: 1.5rem;
     width: 100%;
     display: flex;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+.community-cta .btn {
+    margin: 0 auto !important;
 }
 
 /* Smooth Scrolling */
