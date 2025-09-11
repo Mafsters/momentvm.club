@@ -1441,38 +1441,38 @@ html {
 }
 
 .card-1 {
-    top: 20%;
-    right: 25%;
+    top: 15%;
+    right: 20%;
     animation-delay: 0s;
 }
 
 .card-2 {
-    top: 25%;
-    right: 35%;
+    top: 20%;
+    right: 45%;
     animation-delay: 1s;
 }
 
 .card-3 {
-    top: 45%;
-    right: 30%;
+    top: 35%;
+    right: 15%;
     animation-delay: 2s;
 }
 
 .card-4 {
-    top: 50%;
-    right: 40%;
+    top: 40%;
+    right: 50%;
     animation-delay: 3s;
 }
 
 .card-5 {
-    bottom: 25%;
+    bottom: 20%;
     right: 25%;
     animation-delay: 4s;
 }
 
 .card-6 {
-    bottom: 30%;
-    right: 35%;
+    bottom: 35%;
+    right: 45%;
     animation-delay: 5s;
 }
 
