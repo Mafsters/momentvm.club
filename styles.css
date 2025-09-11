@@ -249,6 +249,13 @@ body {
     margin-bottom: 0.25rem;
 }
 
+/* Hero Visual */
+.hero-visual {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+}
+
 /* Hero Form */
 .hero-form {
     background: white;
