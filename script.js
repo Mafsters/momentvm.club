@@ -120,10 +120,13 @@ function showQuizResults() {
 function scrollToForm() {
     closeQuizModal(); // Close the modal first
     setTimeout(() => {
-        document.getElementById('quickRegistrationForm').scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
+        const applySection = document.getElementById('apply');
+        if (applySection) {
+            applySection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     }, 300); // Small delay to allow modal to close
 }
 
