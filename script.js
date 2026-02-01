@@ -393,7 +393,17 @@ function closePopup() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing forms...');
     
-    // Application form
+    // Hero application form
+    const heroApplicationForm = document.getElementById('heroApplicationForm');
+    if (heroApplicationForm) {
+        console.log('Found hero application form');
+        heroApplicationForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            handleHeroFormSubmission(this);
+        });
+    }
+    
+    // Application form (full version at bottom)
     const applicationForm = document.getElementById('applicationForm');
     if (applicationForm) {
         console.log('Found application form');
@@ -418,7 +428,55 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     console.log('Forms and stats initialized');
-}); 
+});
+
+// Handle hero form (simplified version)
+function handleHeroFormSubmission(form) {
+    const formData = new FormData(form);
+    const data = {
+        from_name: formData.get('from_name'),
+        from_email: formData.get('from_email'),
+        linkedin_url: formData.get('linkedin_url'),
+        role: formData.get('role'),
+        company: '',
+        expertise: 'not_specified',
+        motivation: 'Applied via hero form'
+    };
+    
+    // Basic validation
+    if (!data.from_name || !data.from_email || !data.linkedin_url || !data.role) {
+        alert('Please fill in all fields.');
+        return;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.from_email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Show loading state
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+    
+    // Send email
+    sendFormEmail(form, 'hero')
+        .then((response) => {
+            console.log('Email sent successfully:', response);
+            showSuccessPopup();
+            form.reset();
+        })
+        .catch((error) => {
+            console.error('Email failed:', error);
+            showErrorPopup('Failed to send. Please try again or use the full form below.');
+        })
+        .finally(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        });
+} 
 // Stats animation functions
 function animateCounter(element, target, duration = 2000) {
     let start = 0;
